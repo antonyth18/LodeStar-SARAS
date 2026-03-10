@@ -88,7 +88,7 @@ export function SignupForm() {
               required
             />
           </div>
-          <div className="space-y-2">
+          <div className="space-y-2 pb-2">
             <Label htmlFor="role">Role</Label>
             <select
               id="role"

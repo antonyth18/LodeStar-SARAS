@@ -74,7 +74,32 @@ src/
 - `npm run lint` - Runs ESLint.
 - `npm run format` - Formats the code using Prettier.
 - `npm run typecheck` - Runs TypeScript compiler check.
+- `npm run generate:api` - Generates TypeScript clients and models from OpenAPI schema.
 - `npm run prepare` - Initializes Husky hooks.
+
+---
+
+## 📡 Automatic API Type Generation
+
+This project uses `openapi-typescript-codegen` to keep the frontend synchronized with the backend API.
+
+### Workflow
+
+1.  **Modify Schema**: Edit `openapi/schema.yaml`.
+2.  **Run Generator**:
+    ```bash
+    npm run generate:api
+    ```
+3.  **Use Services**: Import generated services from `@/services/api-generated`.
+
+Example:
+
+```typescript
+import { StudentsService } from '@/services/api-generated';
+
+// Fully typed response and parameters
+const students = await StudentsService.getStudents();
+```
 
 ## 🏗️ Adding Components (ShadCN)
 

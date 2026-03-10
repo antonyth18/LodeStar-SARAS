@@ -1,0 +1,125 @@
+openapi: 3.0.0
+info:
+  title: Lodestar SARAS API
+  version: 1.0.0
+  description: API documentation for Lodestar SARAS backend.
+
+servers:
+  - url: http://localhost:3000/api
+    description: Local development server
+
+paths:
+  /auth/login:
+    post:
+      summary: Login user
+      tags:
+        - Auth
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+      responses:
+        '200':
+          description: Successful login
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthResponse'
+        '401':
+          description: Unauthorized
+
+  /students:
+    get:
+      summary: Get all students
+      tags:
+        - Students
+      responses:
+        '200':
+          description: List of students
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Student'
+
+  /roadmap:
+    get:
+      summary: Get learning roadmap
+      tags:
+        - Roadmap
+      responses:
+        '200':
+          description: Learning roadmap data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Roadmap'
+
+components:
+  schemas:
+    LoginRequest:
+      type: object
+      required:
+        - email
+        - password
+      properties:
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+
+    AuthResponse:
+      type: object
+      properties:
+        user:
+          $ref: '#/components/schemas/User'
+        token:
+          type: string
+
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        email:
+          type: string
+        role:
+          type: string
+          enum: [admin, super-admin, student, parent, counselor]
+
+    Student:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        grade:
+          type: string
+        school:
+          type: string
+
+    Roadmap:
+      type: object
+      properties:
+        id:
+          type: string
+        title:
+          type: string
+        steps:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+              title:
+                type: string
+              completed:
+                type: boolean

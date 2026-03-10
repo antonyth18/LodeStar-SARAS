@@ -66,7 +66,7 @@ export function LoginForm() {
               required
             />
           </div>
-          <div className="space-y-2">
+          <div className="space-y-2 pb-2">
             <Label htmlFor="password">Password</Label>
             <Input
               id="password"
