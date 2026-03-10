@@ -1,36 +1,77 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# SARAS Production-Grade Frontend Boilerplate
 
-## Getting Started
+A modern, scalable Next.js boilerplate tailored for production-ready applications.
 
-First, run the development server:
+## 🚀 Tech Stack
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- **Framework:** Next.js (App Router)
+- **Language:** TypeScript
+- **Styling:** Tailwind CSS
+- **UI Components:** ShadCN UI
+- **State Management:** Zustand
+- **Server State:** TanStack Query
+- **Authentication:** BetterAuth
+- **Tooling:** ESLint, Prettier, Husky (lint-staged, pre-commit/pre-push)
+
+## 📁 Architecture Overview
+
+The project uses a **feature-based architecture** to ensure scalability and maintainability.
+
+```text
+src/
+├── app/                  # Next.js App Router pages and layouts
+├── components/           # Global UI components (ShadCN, etc.)
+├── config/               # Application config, environment variables
+├── features/             # Feature modules (auth, onboarding, etc.)
+│   └── [feature-name]/
+│       ├── api/          # Feature-specific api calls
+│       ├── components/   # Feature-specific components
+│       ├── hooks/        # Feature-specific hooks
+│       ├── types.ts      # Feature-specific types
+│       └── index.ts      # Public API of the feature
+├── hooks/                # Global custom hooks
+├── lib/                  # Utility functions (auth config, utils)
+├── providers/            # Global providers (Query, Theme, Auth)
+├── services/             # Global services (Axios API client)
+├── stores/               # Global Zustand stores
+└── types/                # Global types
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🛠️ Getting Started
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1. **Clone and Install dependencies**
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+   ```bash
+   npm install
+   ```
 
-## Learn More
+2. **Environment Variables**
+   Copy the example env file and fill in your values:
 
-To learn more about Next.js, take a look at the following resources:
+   ```bash
+   cp .env.example .env.local
+   ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+3. **Development Server**
+   ```bash
+   npm run dev
+   ```
+   Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 🤖 Available Scripts
 
-## Deploy on Vercel
+- `npm run dev` - Starts the development server.
+- `npm run build` - Builds the app for production.
+- `npm run start` - Runs the built app in production mode.
+- `npm run lint` - Runs ESLint.
+- `npm run format` - Formats the code using Prettier.
+- `npm run typecheck` - Runs TypeScript compiler check.
+- `npm run prepare` - Initializes Husky hooks.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 🏗️ Adding Components (ShadCN)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+To add more ShadCN UI components:
+
+```bash
+npx shadcn@latest add [component-name]
+```
