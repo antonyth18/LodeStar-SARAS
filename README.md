@@ -10,7 +10,8 @@ A modern, scalable Next.js boilerplate tailored for production-ready application
 - **UI Components:** ShadCN UI
 - **State Management:** Zustand
 - **Server State:** TanStack Query
-- **Authentication:** BetterAuth
+- **Authentication:** BetterAuth (with explicit SQLite driver)
+- **RBAC Roles:** Student, Parent, Counselor, School Admin, Super Admin
 - **Tooling:** ESLint, Prettier, Husky (lint-staged, pre-commit/pre-push)
 
 ## 📁 Architecture Overview
@@ -46,13 +47,20 @@ src/
    ```
 
 2. **Environment Variables**
-   Copy the example env file and fill in your values:
+   Copy the example env file and fill in your values (at minimum `BETTER_AUTH_SECRET` and `DATABASE_URL`):
 
    ```bash
-   cp .env.example .env.local
+   cp .env.example .env
    ```
 
-3. **Development Server**
+3. **Database Setup**
+   Generate and apply the BetterAuth database schema:
+
+   ```bash
+   npx @better-auth/cli migrate --config ./src/lib/auth.ts
+   ```
+
+4. **Development Server**
    ```bash
    npm run dev
    ```

@@ -1,37 +1,40 @@
 'use client';
 
-import { createContext, useContext, useEffect, useState } from 'react';
-
-// Optional: You can create a full AuthProvider if you want to wrap a lot of logic.
-// Often with BetterAuth you just use the client hooks directly, but here is a wrapper if needed.
+import { createContext, useContext, ReactNode } from 'react';
+import { useSession } from '@/features/auth/hooks/useSession';
+import { User, Role } from '@/types/user';
 
 interface AuthContextType {
+  user: User | null;
+  role: Role | null;
   isAuthenticated: boolean;
   isLoading: boolean;
 }
 
 const AuthContext = createContext<AuthContextType>({
+  user: null,
+  role: null,
   isAuthenticated: false,
   isLoading: true,
 });
 
-export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
+export function AuthProvider({ children }: { children: ReactNode }) {
+  const { user, isPending } = useSession();
 
-  useEffect(() => {
-    // This is where you would normally call your auth check logic
-    // const checkAuth = async () => {
-    //     const { data, error } = await authClient.getSession();
-    //     if (data) setIsAuthenticated(true);
-    //     setIsLoading(false);
-    // };
-    // checkAuth();
-  }, []);
+  const value: AuthContextType = {
+    user: user || null,
+    role: (user?.role as Role) || null,
+    isAuthenticated: !!user,
+    isLoading: isPending,
+  };
 
-  return (
-    <AuthContext.Provider value={{ isAuthenticated, isLoading }}>{children}</AuthContext.Provider>
-  );
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
 
-export const useAuth = () => useContext(AuthContext);
+export const useAuth = () => {
+  const context = useContext(AuthContext);
+  if (context === undefined) {
+    throw new Error('useAuth must be used within an AuthProvider');
+  }
+  return context;
+};
